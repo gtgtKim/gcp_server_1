@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Main Page</title>
+    <link rel="stylesheet" href="/styles/style.css" />
+
+    <script src="/scripts/common.js"></script>
+
+    <script>
+      var btn_click = function () {
+        dataLayer.push({ event: "btn_click" });
+      };
+    </script>
+  </head>
+  <body>
+    <h1>Welcome to the Main Page</h1>
+    <a href="/product-list" style="display: block">Go to Product List</a>
+    <button onclick="btn_click()">dataLayer.push({'event':'btn_click'})</button>
+  </body>
+</html>
