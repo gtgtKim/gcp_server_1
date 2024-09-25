@@ -1,22 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Product Detail</title>
-    <script src="/scripts/common.js"></script>
-    <script>
-      var btn_click = function () {
-        dataLayer.push({ event: "btn_click" });
-      };
-    </script>
-    <script>
-      var CODE = "<%= productId %>";
-    </script>
-  </head>
-  <body>
-    <h1>This is the Product Detail Page for Product ID: <%= productId %></h1>
-    <a href="/main" style="display: block">Go to Main</a>
-    <button onclick="btn_click()">상품<%= productId %>번</button>
-  </body>
-</html>
+<% layout('layout') %>
+<% title = `product-detail ${productId}`; %>
+<% headScripts = `
+  <script>
+    var btn_click = function() {
+      dataLayer.push({
+        event: "btn_click"
+      });
+    };
+
+    function increaseQuantity() {
+      var qtyInput = document.getElementById("quantity");
+      qtyInput.value = parseInt(qtyInput.value) + 1;
+    }
+
+    function decreaseQuantity() {
+      var qtyInput = document.getElementById("quantity");
+      if (parseInt(qtyInput.value) > 1) {
+        qtyInput.value = parseInt(qtyInput.value) - 1;
+      }
+    }
+  </script>
+` %>
+
+<h1 class="text-center my-4">Product Detail Page for Product ID: <%= productId %></h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 text-center">
+      <!-- 상품 ID에 따른 CDN 이미지 표시 -->
+      <img src="https://cdn.gyutae.xyz/cdn-image/image<%= productId %>.png" alt="Product Image" class="img-fluid rounded" />
+    </div>
+    <div class="col-md-6">
+      <div class="product-options">
+        <!-- 상품 옵션 선택 -->
+        <div class="mb-3">
+          <label for="productOption" class="form-label">옵션 선택</label>
+          <select id="productOption" class="form-select">
+            <option value="option1">옵션 1</option>
+            <option value="option2">옵션 2</option>
+            <option value="option3">옵션 3</option>
+          </select>
+        </div>
+
+        <!-- 수량 조절 -->
+        <div class="quantity-controls mb-3">
+          <label for="quantity" class="form-label">수량</label>
+          <div class="input-group" style="max-width: 150px;">
+            <button class="btn btn-outline-secondary" type="button" onclick="decreaseQuantity()">-</button>
+            <input type="number" id="quantity" class="form-control text-center" value="1" min="1" />
+            <button class="btn btn-outline-secondary" type="button" onclick="increaseQuantity()">+</button>
+          </div>
+        </div>
+
+        <!-- 장바구니 추가 및 바로 구매 버튼 -->
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+          <button class="btn btn-primary me-md-2" type="button" onclick="btn_click()">장바구니 추가</button>
+          <button class="btn btn-success" type="button" onclick="btn_click()">바로 구매</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p class="mt-4">
+  <a href="/main" class="btn btn-link">Go to Main</a>
+</p>

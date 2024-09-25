@@ -1,22 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Main Page</title>
-    <link rel="stylesheet" href="/styles/style.css" />
+<% layout('layout') %>
+<% title = 'Main Page'; %>
 
-    <script src="/scripts/common.js"></script>
+<style>
+  .carousel-caption-custom {
+    bottom: 20px;
+    /* 캡션의 하단 위치를 조정 */
+  }
+</style>
 
-    <script>
-      var btn_click = function () {
-        dataLayer.push({ event: "btn_click" });
-      };
-    </script>
-  </head>
-  <body>
-    <h1>Welcome to the Main Page</h1>
-    <a href="/product-list" style="display: block">Go to Product List</a>
-    <button onclick="btn_click()">dataLayer.push({'event':'btn_click'})</button>
-  </body>
-</html>
+<h1 class="text-center my-4">Welcome to the Main Page</h1>
+
+<% const bannerItems = []; for (let i = 1; i <= 5; i++) 
+{ bannerItems.push({ 
+  title: "banner " + i, link: "/events/" + i, image: "https://cdn.gyutae.xyz/cdn-image/banner" + i + ".png", }); } 
+%>
+
+<div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <% bannerItems.forEach(function(item, index) { %>
+    <div class="carousel-item <%= index === 0 ? 'active' : '' %>" data-bs-interval="100">
+      <a href="<%= item.link %>">
+        <img src="<%= item.image %>" class="d-block w-100" alt="<%= item.title %>">
+        <div style="display: none;">
+          <h5><%= item.title %></h5>
+        </div>
+      </a>
+    </div>
+    <% }) %>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<a href="/product-list" class="btn btn-primary mt-4">Go to Product List</a>
+
+<div class="mt-4">
+  <button class="btn btn-secondary" onclick="btn_click()">Trigger Event</button>
+</div>
+
+<div class="container mt-4">
+  <h2>Non-Privacy Mode</h2>
+  <div class="ratio ratio-16x9">
+    <iframe src="https://www.youtube.com/embed/rjEnFLsulp0?si=y5iQEX703sUDyb_Y&amp;start=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+</div>
+
+<div class="container mt-4">
+  <h2>Privacy Mode</h2>
+  <div class="ratio ratio-16x9">
+    <iframe src="https://www.youtube-nocookie.com/embed/rjEnFLsulp0?si=y5iQEX703sUDyb_Y&amp;start=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+</div>
