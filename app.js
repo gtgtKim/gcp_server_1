@@ -60,7 +60,8 @@ app.use((req, res, next) => {
 
 // Redirect root to /main
 app.get("/", (req, res) => {
-  res.redirect("/main");
+  // res.redirect("/main");
+  res.render("blank");
 });
 
 // Use auth routes
