@@ -1,4 +1,5 @@
-쿠키동의(function (url, callback) {
+//쿠키동의
+(function (url, callback) {
   var script = document.createElement("script");
   script.src = url;
   script.onload = callback;
